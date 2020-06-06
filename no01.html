@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>脳トレ</title>
+	<style>
+	body {background-color:#000000;}
+	</style>
+</head>
+<body>
+	<h1>第1問</h1>
+	<button id="start">スタート</button>
+	<p>次に読み上げる数字を覚えてください。</p>
+	<div id="que_text">
+	</div>
+	<p>4番目に読み上げた数字はいくつでしょう</p>
+	<input type="number" id="num" value="0" max="9" min="0" >
+	<button id="answer">回答</button>
+<script>
+
+const start_btn = document.getElementById('start');
+const answer_btn = document.getElementById('answer');
+
+var timer;
+// スタートボタン
+start_btn.onclick = function(){
+	start_btn.disabled = true;
+	answer_btn.disabled = false;
+	randomNum();
+	pass_sec = 0;
+	timer = window.setInterval('cntSec()',1000);
+
+}
+
+// 回答ボタン
+answer_btn.onclick = function() {
+	window.clearInterval(timer);
+	start_btn.disabled = false;
+	answer_btn.disabled = true;
+	let ans_num = document.getElementById('num').value;
+	
+	let msg = '';
+	if (ans_num == que.get(3)) {
+		msg = '正解です。' ;
+	} else {
+		msg = '不正解です。正解は' + que.get(3) + 'です。';
+	}
+	msg = msg + pass_sec + '秒かかりました。';
+	alert(msg);
+}
+
+// 経過時間カウント
+var pass_sec;
+function cntSec(){
+	pass_sec++;
+}
+
+// 乱数生成
+var que_text_area = document.getElementById('que_text');
+var que = new Map();
+function randomNum() {
+
+	que.clear();
+	for (let i = 0; i < 9 ; i++) {
+		let val = Math.floor(Math.random() * 10);
+		que.set(i, val);
+		
+		let node = document.createElement('P');
+		let textnode = document.createTextNode(val);
+		node.appendChild(textnode);
+		que_text_area.appendChild(node);
+	}
+}
+
+</script>
+	
+</body>
+</html>
